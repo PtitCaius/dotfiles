@@ -9,6 +9,11 @@
 
 - link:
     ~/.dotfiles: ''
+    ~/.vim:
+    ~/.vimrc:
+    ~/.bash_aliases:
+    ~/.profile:
+    ~/.bashrc:
     ~/.config/ranger: 'config/ranger'
     ~/.config/termite: 'config/termite'
     ~/.config/awesome: 'config/awesome'
