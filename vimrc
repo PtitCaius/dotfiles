@@ -46,6 +46,8 @@ NeoBundle 'skywind3000/asyncrun.vim'
 NeoBundle 'tpope/vim-dispatch' 
 NeoBundle 'rdnetto/YCM-Generator' 
 NeoBundle 'jceb/vim-orgmode' 
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-repeat'
 
 if !has('nvim') 	
 	NeoBundle 'jeaye/color_coded' 	
@@ -114,7 +116,7 @@ vnoremap  ii <ESC>
 if has('nvim')
 	tnoremap ii <C-\><C-n> 
 	au TermOpen * startinsert
-	let g:chromatica#libclang_path = "/usr/lib/llvm-6.0/lib"
+"	let g:chromatica#libclang_path = "/usr/lib/llvm-6.0/lib"
 	let g:chromatica#enable_at_startup=1
 	let g:airline#extensions#tabline#enabled = 1
 	let g:airline_theme='solarized'
