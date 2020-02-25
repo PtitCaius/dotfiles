@@ -23,3 +23,4 @@
     ~/.local/share/fonts/truetype: 'local/share/fonts/truetype'
     ~/.local/share/icons/Solarized-Material-Flat-Steel: 'local/share/icons/Solarized-Material-Flat-Steel'
     ~/.local/share/icons/xcursor-breeze: 'local/share/icons/xcursor-breeze'
+    ~/.local/share/applications/mimeapps.list: 'local/share/applications/mimeapps.list'
