@@ -21,7 +21,7 @@ local debian = require("debian.menu")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
-
+naughty.config.defaults['icon_size'] = dpi(100)
 -- Autostart windowless processes
 local function run_once(cmd_arr)
     for _, cmd in ipairs(cmd_arr) do
@@ -72,7 +72,7 @@ beautiful.init("~/.config/awesome/themes/zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
-editor = os.getenv("EDITOR") or "editor"
+editor = os.getenv("EDITOR") or "nvim" 
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
