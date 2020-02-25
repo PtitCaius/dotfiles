@@ -6,7 +6,7 @@
 #cell_width_scale = 1.0
 #clickable_url = true
 #dynamic_title = true
-font = Monospace 9
+font = UbuntuMonoPowerline 8
 #fullscreen = true
 #icon_name = terminal
 #mouse_autohide = false
@@ -15,7 +15,7 @@ font = Monospace 9
 # Length of the scrollback buffer, 0 disabled the scrollback buffer
 # and setting it to a negative value means "infinite scrollback"
 scrollback_lines = 10000
-#search_wrap = true
+search_wrap = false
 #urgent_on_bell = true
 #hyperlinks = false
 
@@ -47,7 +47,7 @@ foreground          = #839496
 foreground_bold     = #839496
 cursor              = #93a1a1
 cursor_foreground   = #002b36
-background          = #002b36 
+background          = rgba(0, 43, 54, 0.8) 
 
 # 16 color space
 

@@ -77,6 +77,8 @@ set makeprg=make\ -C\ ./build
 let g:easytags_async = 1 
 let g:easytags_auto_highlight = 0 
 colorscheme solarized8 
+hi CursorLine gui=underline guibg=NONE
+hi Normal guibg=NONE
 
 nnoremap <F3> :NERDTreeToggle<CR> 
 nnoremap <F2> :TagbarToggle<CR> 

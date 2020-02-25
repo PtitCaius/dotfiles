@@ -5,3 +5,9 @@
 [submodule "vim/bundle/neobundle.vim"]
 	path = vim/bundle/neobundle.vim
 	url = https://github.com/Shougo/neobundle.vim
+[submodule "soft/termite"]
+	path = soft/termite
+	url = https://github.com/thestinger/termite.git
+[submodule "soft/vte-ng"]
+	path = soft/vte-ng
+	url = https://github.com/thestinger/vte-ng.git
