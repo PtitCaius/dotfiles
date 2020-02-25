@@ -1,6 +1,5 @@
 # dotfiles
-Personnal dotfiles
-
+Personnal dotfiles. Powered by [dotbot](https://github.com/anishathalye/dotbot).
 ## Actual Linux distribution
 Ubuntu 16.04
 
