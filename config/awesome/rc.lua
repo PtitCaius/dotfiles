@@ -34,10 +34,12 @@ local function run_once(cmd_arr)
     end
 end
 
+locker = "i3lock-fancy-dualmonitor -gp"
+
 -- Autostart programs
 run_once({ "nm-applet -sm-disable" })
 run_once({ "compton" })
-run_once({ "xautolock -time 10 -locker 'i3lock-fancy-dualmonitor -gp'" })
+run_once({ "xautolock -time 10 -locker '" .. locker .. "'" })
 run_once({ "caffeine" })
 
 
@@ -71,7 +73,7 @@ end
 beautiful.init("~/.config/awesome/themes/zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "x-terminal-emulator"
+terminal = "termite"
 editor = os.getenv("EDITOR") or "nvim" 
 editor_cmd = terminal .. " -e " .. editor
 
@@ -518,8 +520,10 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, 
+      properties = { titlebars_enabled = true }
     },
+    
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
@@ -528,6 +532,67 @@ awful.rules.rules = {
 -- }}}
 
 -- {{{ Signals
+--- Signal function for adding or not the title bar, depending on the floating/maximized state of the client 
+client.connect_signal("property::floating", function(c)
+
+    if c.floating or (c.first_tag ~= nil and c.first_tag.layout.name == "floating") then
+        awful.titlebar.show(c)
+	c.border_width = beautiful.border_width
+    else
+        awful.titlebar.hide(c)
+	c.border_width = 0
+    end
+end)
+
+client.connect_signal("raised", function(c)
+
+    if c.floating or (c.first_tag ~= nil and c.first_tag.layout.name == "floating") then
+        awful.titlebar.show(c)
+	c.border_width = beautiful.border_width
+    else
+        awful.titlebar.hide(c)
+	c.border_width = 0
+    end
+end)
+
+client.connect_signal("manage", function(c)
+    if c.floating or c.first_tag.layout.name == "floating" then
+        awful.titlebar.show(c)
+	c.border_width = beautiful.border_width
+    else
+        awful.titlebar.hide(c)
+	c.border_width = 0
+    end
+end)
+
+client.connect_signal("request::activate", function(c)
+    if context == client.movetoscreen then
+        if c.floating or c.first_tag.layout.name == "floating" then
+            awful.titlebar.show(c)
+	    c.border_width = beautiful.border_width
+        else
+            awful.titlebar.hide(c)
+    	    c.border_width = 0
+        end
+
+    end
+end)
+
+tag.connect_signal("property::layout", function(t)
+    local clients = t:clients()
+    for k,c in pairs(clients) do
+        if c.floating or c.first_tag.layout.name == "floating" then
+            awful.titlebar.show(c)
+	    c.border_width = beautiful.border_width
+        else
+            awful.titlebar.hide(c)
+	    c.border_width = 0
+        end
+    end
+end)
+
+
+
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
     -- Set the windows at the slave,
