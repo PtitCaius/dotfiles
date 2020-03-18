@@ -11,3 +11,6 @@
 [submodule "soft/vte-ng"]
 	path = soft/vte-ng
 	url = https://github.com/thestinger/vte-ng.git
+[submodule "themes/Nordic"]
+	path = themes/Nordic
+	url = https://github.com/EliverLara/Nordic
