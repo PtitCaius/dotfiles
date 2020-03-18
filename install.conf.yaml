@@ -14,6 +14,7 @@
     ~/.bash_aliases:
     ~/.profile:
     ~/.bashrc:
+    ~/.gtkrc-2.0:
     ~/.config/ranger: 'config/ranger'
     ~/.config/termite: 'config/termite'
     ~/.config/awesome: 'config/awesome'
@@ -24,4 +25,5 @@
     ~/.local/share/icons/Solarized-Material-Flat-Steel: 'local/share/icons/Solarized-Material-Flat-Steel'
     ~/.local/share/icons/xcursor-breeze: 'local/share/icons/xcursor-breeze'
     ~/.icons/default: 'local/share/icons/xcursor-breeze'
+    ~/.config/gtk-3.0: 'config/gtk-3.0'
     ~/.local/share/applications/mimeapps.list: 'local/share/applications/mimeapps.list'
