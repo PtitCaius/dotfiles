@@ -6,6 +6,7 @@
 
 - create:
     - ~/.local/share/fonts/
+    - ~/.local/bin
 
 - link:
     ~/.dotfiles: ''
@@ -21,6 +22,7 @@
     ~/.config/compton.conf: 'config/compton.conf'
     ~/.config/nvim: 'config/nvim'
     ~/.config/rofi: 'config/rofi'
+    ~/.config/spicetify: 'config/spicetify'
     ~/.local/share/fonts/truetype: 'local/share/fonts/truetype'
     ~/.local/share/icons/Solarized-Material-Flat-Steel: 'local/share/icons/Solarized-Material-Flat-Steel'
     ~/.local/share/icons/xcursor-breeze: 'local/share/icons/xcursor-breeze'
@@ -28,3 +30,4 @@
     ~/.icons/default: 'local/share/icons/xcursor-breeze'
     ~/.config/gtk-3.0: 'config/gtk-3.0'
     ~/.local/share/applications/mimeapps.list: 'local/share/applications/mimeapps.list'
+    ~/.local/bin/spicetify: 'soft/spicetify/spicetify'
