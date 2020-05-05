@@ -6,6 +6,7 @@
 
 - create:
     - ~/.local/share/fonts/
+    - ~/.local/bin/
 
 - link:
     ~/.dotfiles: ''
@@ -14,6 +15,7 @@
     ~/.bash_aliases:
     ~/.profile:
     ~/.bashrc:
+    ~/.zshrc:
     ~/.gtkrc-2.0:
     ~/.config/ranger: 'config/ranger'
     ~/.config/termite: 'config/termite'
@@ -21,10 +23,21 @@
     ~/.config/compton.conf: 'config/compton.conf'
     ~/.config/nvim: 'config/nvim'
     ~/.config/rofi: 'config/rofi'
+    ~/.config/oh-my-zsh: 'config/oh-my-zsh'
+    ~/.config/p10k.zsh: 'config/p10h.zsh'
     ~/.local/share/fonts/truetype: 'local/share/fonts/truetype'
     ~/.local/share/icons/Solarized-Material-Flat-Steel: 'local/share/icons/Solarized-Material-Flat-Steel'
     ~/.local/share/icons/xcursor-breeze: 'local/share/icons/xcursor-breeze'
+    ~/.local/share/fonts/SourceCodePro: 'fonts/SourceCodePro'
     ~/.themes:
+    ~/.icons:
+    ~/.local/bin/poll-xrandr: './soft/poll-xrandr/poll-xrandr'
+    ~/.local/bin/neofetch: './soft/neofetch/neofetch'
     ~/.icons/default: 'local/share/icons/xcursor-breeze'
     ~/.config/gtk-3.0: 'config/gtk-3.0'
     ~/.local/share/applications/mimeapps.list: 'local/share/applications/mimeapps.list'
+    ~/.dir_colors:
+
+- shell:
+    - MYPWD=`pwd` && cd config/gedit/nord-gedit/ && ./install.sh && cd $MYPWD
+    - chmod +x ~/.local/bin/poll-xrandr

@@ -14,3 +14,24 @@
 [submodule "themes/Nordic"]
 	path = themes/Nordic
 	url = https://github.com/EliverLara/Nordic
+[submodule "icons/Zafiro-icons"]
+	path = icons/Zafiro-icons
+	url = https://github.com/zayronxio/Zafiro-icons
+[submodule "fonts"]
+	path = fonts
+	url = https://github.com/powerline/fonts
+[submodule "soft/neofetch"]
+	path = soft/neofetch
+	url = https://github.com/dylanaraps/neofetch
+[submodule "config/gedit/nord-gedit"]
+	path = config/gedit/nord-gedit
+	url = https://github.com/arcticicestudio/nord-gedit
+[submodule "config/awesome/widget/battery-widget"]
+	path = config/awesome/widget/battery-widget
+	url = https://github.com/deficient/battery-widget
+[submodule "soft/awesome"]
+	path = soft/awesome
+	url = https://github.com/awesomeWM/awesome.git
+[submodule "soft/lua-pam"]
+	path = soft/lua-pam
+	url = https://github.com/RMTT/lua-pam
