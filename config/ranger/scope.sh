@@ -41,7 +41,9 @@ FILE_EXTENSION_LOWER="$(printf "%s" "${FILE_EXTENSION}" | tr '[:upper:]' '[:lowe
 ## Settings
 HIGHLIGHT_SIZE_MAX=262143  # 256KiB
 HIGHLIGHT_TABWIDTH=${HIGHLIGHT_TABWIDTH:-8}
-HIGHLIGHT_STYLE=${HIGHLIGHT_STYLE:-pablo}
+#HIGHLIGHT_STYLE=${HIGHLIGHT_STYLE:-pablo}
+HIGHLIGHT_STYLE=solarized-dark
+
 HIGHLIGHT_OPTIONS="--replace-tabs=${HIGHLIGHT_TABWIDTH} --style=${HIGHLIGHT_STYLE} ${HIGHLIGHT_OPTIONS:-}"
 PYGMENTIZE_STYLE=${PYGMENTIZE_STYLE:-autumn}
 OPENSCAD_IMGSIZE=${RNGR_OPENSCAD_IMGSIZE:-1000,1000}
@@ -128,9 +130,9 @@ handle_image() {
     local mimetype="${1}"
     case "${mimetype}" in
         ## SVG
-        # image/svg+xml|image/svg)
-        #     convert -- "${FILE_PATH}" "${IMAGE_CACHE_PATH}" && exit 6
-        #     exit 1;;
+        image/svg+xml|image/svg)
+            convert -- "${FILE_PATH}" "${IMAGE_CACHE_PATH}" && exit 6
+            exit 1;;
 
         ## DjVu
         # image/vnd.djvu)
@@ -160,14 +162,14 @@ handle_image() {
         #     exit 1;;
 
         ## PDF
-        # application/pdf)
-        #     pdftoppm -f 1 -l 1 \
-        #              -scale-to-x "${DEFAULT_SIZE%x*}" \
-        #              -scale-to-y -1 \
-        #              -singlefile \
-        #              -jpeg -tiffcompression jpeg \
-        #              -- "${FILE_PATH}" "${IMAGE_CACHE_PATH%.*}" \
-        #         && exit 6 || exit 1;;
+        application/pdf)
+            pdftoppm -f 1 -l 1 \
+                     -scale-to-x "${DEFAULT_SIZE%x*}" \
+                     -scale-to-y -1 \
+                     -singlefile \
+                     -jpeg -tiffcompression jpeg \
+                     -- "${FILE_PATH}" "${IMAGE_CACHE_PATH%.*}" \
+                && exit 6 || exit 1;;
 
 
         ## ePub, MOBI, FB2 (using Calibre)
@@ -297,7 +299,7 @@ handle_mime() {
             fi
             if [[ "$( tput colors )" -ge 256 ]]; then
                 local pygmentize_format='terminal256'
-                local highlight_format='xterm256'
+                local highlight_format='ansi'
             else
                 local pygmentize_format='terminal'
                 local highlight_format='ansi'

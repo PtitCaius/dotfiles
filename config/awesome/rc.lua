@@ -14,6 +14,7 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+--require('module.lockscreen')
 -- Load Debian menu entries
 local debian = require("debian.menu")
 
@@ -33,14 +34,15 @@ local function run_once(cmd_arr)
         awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", findme, cmd))
     end
 end
-
 locker = "i3lock-fancy-dualmonitor -gp"
+--locker = "awesome-client \"_G.show_lockscreen()\""
 
 -- Autostart programs
 run_once({ "nm-applet -sm-disable" })
-run_once({ "compton" })
+--run_once({ "compton" })
 run_once({ "xautolock -time 10 -locker '" .. locker .. "'" })
 run_once({ "caffeine" })
+-- run_once({ "/usr/local/mattermost-desktop-4.3.1-linux-x64/mattermost-desktop --hidden" })
 
 
 -- {{{ Error handling
@@ -211,9 +213,8 @@ screen.connect_signal("property::geometry", set_wallpaper)
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
-
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[2])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -231,6 +232,25 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
+    -- Create the battery widget
+    s.myBattery = require("./widget/battery-widget"){
+	    ac = "AC",
+	    adapter = "BAT0",
+	    ac_prefix = "",
+	    battery_prefix = {
+		    { 20,  "" },
+		    { 40,  "" },
+		    { 60,  "" },
+		    { 80,  "" },
+		    { 100, "" },
+	    },
+	    listen = true,
+	    timeout = 10,
+	    widget_text = '<span font="Ubuntu Nerd Font 14">${AC_BAT}</span> ',
+	    tooltip_text = "Battery ${state}: ${percent}%\n${time_text} remaining",
+	    widget_font = beautiful.font
+    }
+
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
 
@@ -245,9 +265,10 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
+	    s.myBattery,
             wibox.widget.systray(),
             mytextclock,
-            s.mylayoutbox,
+            s.mylayoutbox
         },
     }
 end)
@@ -369,7 +390,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
     --]]
-    awful.key({ modkey },            "r",    function() awful.spawn("rofi -show drun -theme met -show-icons -icon-theme Papirus-Light") end,
+    awful.key({ modkey },            "r",    function() awful.spawn("rofi -show drun -theme met -show-icons -icon-theme Zafiro-icons") end,
               {description = "run prompt", group = "launcher"})
 )
 
@@ -511,6 +532,8 @@ awful.rules.rules = {
 
         name = {
           "Event Tester",  -- xev.
+	  "damavanFileConverter",
+	  "atlas-0.1.0"
         },
         role = {
           "AlarmWindow",  -- Thunderbird's calendar.
@@ -534,18 +557,6 @@ awful.rules.rules = {
 -- {{{ Signals
 --- Signal function for adding or not the title bar, depending on the floating/maximized state of the client 
 client.connect_signal("property::floating", function(c)
-
-    if c.floating or (c.first_tag ~= nil and c.first_tag.layout.name == "floating") then
-        awful.titlebar.show(c)
-	c.border_width = beautiful.border_width
-    else
-        awful.titlebar.hide(c)
-	c.border_width = 0
-    end
-end)
-
-client.connect_signal("raised", function(c)
-
     if c.floating or (c.first_tag ~= nil and c.first_tag.layout.name == "floating") then
         awful.titlebar.show(c)
 	c.border_width = beautiful.border_width

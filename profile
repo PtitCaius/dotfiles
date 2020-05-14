@@ -18,5 +18,7 @@ fi
 
 # set PATH so it includes user's private bin directories
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-BROWSER="/usr/bin/firefox"
-EDITOR="/usr/bin/nvim"
+export BROWSER="/usr/bin/firefox"
+export EDITOR="nvim"
+export VISUAL="nvim"
+export QT_STYLE_OVERRIDE=gtk

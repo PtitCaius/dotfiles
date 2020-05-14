@@ -6,7 +6,8 @@
 #cell_width_scale = 1.0
 #clickable_url = true
 #dynamic_title = true
-font = UbuntuMonoPowerline 8
+#font = Source Code Pro for Powerline Regular 10
+font = MesloLGS NF Regular 10
 #fullscreen = true
 #icon_name = terminal
 #mouse_autohide = false
@@ -41,64 +42,30 @@ browser = xdg-open
 #scrollbar = off
 
 [colors]
-# Base16 Solarized Dark
-# Author: Ethan Schoonover (modified by aramisgithub)
-foreground          = #839496
-foreground_bold     = #839496
-cursor              = #93a1a1
-cursor_foreground   = #002b36
-background          = rgba(0, 43, 54, 0.8) 
+cursor = #d8dee9
+cursor_foreground = #2e3440
 
-# 16 color space
+foreground = #d8dee9
+foreground_bold = #d8dee9
+background = rgba(46,52,64,0.90)
 
-# Black, Gray, Silver, White
-color0  = #002b36
-color8  = #586e75
-color7  = #839496
-#color15 = #fdf6e3
-color15 = #93a1a1
+highlight = #4c566a
 
-# Red
-color1  = #dc322f
-color9  = #dc322f
-
-# Green
-color2  = #859900
-color10 = #859900
-
-# Yellow
-color3  = #b58900
-color11 = #b58900
-
-# Blue
-color4  = #268bd2
-color12 = #268bd2
-
-# Purple
-color5  = #6c71c4
-color13 = #6c71c4
-
-# Teal
-color6  = #2aa198
-color14 = #2aa198
-
-# Extra colors
-color16 = #cb4b16
-color17 = #d33682
-color18 = #073642
-color19 = #586e75
-color20 = #839496
-
-[hints]
-#font = Monospace 12
-#foreground = #dcdccc
-#background = #3f3f3f
-#active_foreground = #e68080
-#active_background = #3f3f3f
-#padding = 2
-#border = #3f3f3f
-#border_width = 0.5
-#roundness = 2.0
-
+color0  = #3b4252
+color1  = #bf616a
+color2  = #a3be8c
+color3  = #ebcb8b
+color4  = #81a1c1
+color5  = #b48ead
+color6  = #88c0d0
+color7  = #e5e9f0
+color8  = #4c566a
+color9  = #bf616a
+color10 = #a3be8c
+color11 = #ebcb8b
+color12 = #81a1c1
+color13 = #b48ead
+color14 = #8fbcbb
+color15 = #eceff4
 # vim: ft=dosini cms=#%s
 
