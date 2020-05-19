@@ -1,4 +1,3 @@
-let $GITLAB_PRIVATE_TOKEN="7go8fSZXprGAig9nqTUv"
 if has('nvim')
 	let g:powerline_loaded = 1
 endif
@@ -46,7 +45,10 @@ NeoBundle 'preservim/nerdtree'
 NeoBundle 'tpope/vim-fugitive'
 let g:fugitive_dynamic_colors=0
 "NeoBundle 'junegunn/gv.vim'
+NeoBundle 'rbong/vim-flog'
+let g:flog_default_arguments = { 'format': '%ai [%h] {%an}%d %s' }
 "NeoBundle 'valloric/youcompleteme'
+
 NeoBundle 'vim-scripts/a.vim'
 NeoBundle 'xolox/vim-easytags'
 NeoBundle 'xolox/vim-misc'
@@ -320,4 +322,5 @@ map gm :call SynStack()<CR>
 
 set concealcursor=nc
 au Filetype markdown setlocal nofoldenable
+au Filetype floggraph setlocal ea
 au BufEnter *.md setlocal conceallevel=2
