@@ -26,15 +26,10 @@
     ~/.config/oh-my-zsh: 'config/oh-my-zsh'
     ~/.config/p10k.zsh: 'config/p10h.zsh'
     ~/.config/spicetify: 'config/spicetify'
-    ~/.local/share/fonts/truetype: 'local/share/fonts/truetype'
-    ~/.local/share/icons/Solarized-Material-Flat-Steel: 'local/share/icons/Solarized-Material-Flat-Steel'
-    ~/.local/share/icons/xcursor-breeze: 'local/share/icons/xcursor-breeze'
-    ~/.local/share/fonts/SourceCodePro: 'fonts/SourceCodePro'
     ~/.themes:
     ~/.icons:
     ~/.local/bin/poll-xrandr: './soft/poll-xrandr/poll-xrandr'
     ~/.local/bin/neofetch: './soft/neofetch/neofetch'
-    ~/.icons/default: 'local/share/icons/xcursor-breeze'
     ~/.config/gtk-3.0: 'config/gtk-3.0'
     ~/.local/share/applications/mimeapps.list: 'local/share/applications/mimeapps.list'
     ~/.dir_colors:

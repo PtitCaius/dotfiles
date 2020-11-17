@@ -130,6 +130,8 @@ theme.titlebar_maximized_button_focus_active  = themes_path .. "zenburn/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path .. "zenburn/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_inactive  = themes_path .. "zenburn/titlebar/maximized_focus_inactive.png"
 theme.titlebar_maximized_button_normal_inactive = themes_path .. "zenburn/titlebar/maximized_normal_inactive.png"
+
+theme.transparent = theme.bg_normal .. "AA"
 -- }}}
 -- }}}
 

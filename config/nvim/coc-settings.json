@@ -1,61 +1,100 @@
 {
-	"clangd.path": "/usr/lib/llvm-10/bin/clangd",
-	"clangd.arguments": ["-cross-file-rename", "-clang-tidy", "-j=4", "--limit-results=20"],
-	"suggest.timeout": 5000,
-	"suggest.maxCompleteItemCount": 20,
-	"suggest.localityBonus": false,
-	"suggest.enablePreselect": true,
-	"suggest.noselect": false,
-	"clangd.semanticHighlighting": true,
-	"suggest.detailMaxLength": 100,
-	"suggest.labelMaxLength": 100,
-	"suggest.detailField": "abbr",
-	"suggest.minTriggerInputLength": 3,
-	"yaml.schemas": {
-		"/home/lopezmar/Projets/atlas/resource/atlas.schema.json": "**.yaml",
-		"http://json.schemastore.org/gitlab-ci": "**/.gitlab-ci.yml"
-	},
-	"yaml.completion": true,
-	"coc-actions.hideCursor": false,
-	"yaml.validate": true,
-	"diagnostic.errorSign": "",
-	"diagnostic.warningSign": "",
-	"diagnostic.virtualText": true,
-	"diagnostic.virtualTextPrefix": "     ",
-	"git.gitlab.hosts": [
-		"git.damavan04.dmv"
-	],
-	"git.removedSign.text": "-",
-	"git.topRemovedSign.text": "-",
-	"suggest.snippetIndicator": "",
-	"suggest.completionItemKindLabels": {
-		"keyword": "",
-		"variable": "",
-		"value": "",
-		"operator": "",
-		"function": "",
-		"reference": "渚",
-		"constant": "",
-		"method": "",
-		"struct": "פּ",
-		"class": "",
-		"interface": "",
-		"text": "",
-		"enum": "",
-		"enumMember": "",
-		"module": "",
-		"color": "",
-		"property": "",
-		"field": "",
-		"unit": "",
-		"event": "鬒",
-		"file": "",
-		"folder": "",
-		"snippet": "",
-		"typeParameter": "",
-		"default": ""
+  "clangd.path": "/home/lopezmar/.config/coc/extensions/coc-clangd-data/install/10.0.0/clangd_10.0.0/bin/clangd",
+  "clangd.arguments": [
+    "-cross-file-rename",
+    "-clang-tidy",
+    "-j=4",
+    "--limit-results=20",
+    "--fallback-style=none"
+  ],
+  "suggest.timeout": 5000,
+  "suggest.maxCompleteItemCount": 20,
+  "suggest.localityBonus": false,
+  "suggest.enablePreselect": true,
+  "suggest.noselect": false,
+  "clangd.semanticHighlighting": true,
+  "suggest.detailMaxLength": 100,
+  "suggest.labelMaxLength": 100,
+  "suggest.detailField": "abbr",
+  "suggest.minTriggerInputLength": 3,
+  "yaml.schemas": {
+    "/home/lopezmar/Projets/atlas/resource/atlas.schema.json": "atlas.yaml",
+    "http://json.schemastore.org/gitlab-ci": "**/.gitlab-ci.yml"
+  },
+  "yaml.completion": true,
+  "coc-actions.hideCursor": false,
+  "yaml.validate": true,
+  "diagnostic.errorSign": "",
+  "diagnostic.warningSign": "",
+  "diagnostic.virtualText": true,
+  "diagnostic.virtualTextPrefix": "     ",
+  "git.gitlab.hosts": [
+    "git.damavan04.dmv"
+  ],
+  "git.removedSign.text": "-",
+  "git.topRemovedSign.text": "-",
+  "git.addGBlameToVirtualText": false,
+  "git.showCommitInFloating": true,
+  "suggest.snippetIndicator": "",
+  "suggest.completionItemKindLabels": {
+    "keyword": "",
+    "variable": "",
+    "value": "",
+    "operator": "",
+    "function": "",
+    "reference": "渚",
+    "constant": "",
+    "method": "",
+    "struct": "פּ",
+    "class": "",
+    "interface": "",
+    "text": "",
+    "enum": "",
+    "enumMember": "",
+    "module": "",
+    "color": "",
+    "property": "",
+    "field": "",
+    "unit": "",
+    "event": "鬒",
+    "file": "",
+    "folder": "",
+    "snippet": "",
+    "typeParameter": "",
+    "default": ""
   },
   "git.enableGutters": true,
   "coc.source.buffer.enable": false,
-  "coc.source.around.enable": false
+  "coc.source.around.enable": false,
+  "coc.source.issues.enable": false,
+  "git.semanticCommit.filetypes": [],
+  "coc.preferences.extensionUpdateCheck": "daily",
+  "diagnostic-languageserver.filetypes": {
+    "markdown": "languagetool"
+  },
+  "diagnostic-languageserver.enable": false,
+  "diagnostic-languageserver.linters": {
+    "languagetool" : {
+        "command": "languagetool",
+        "debounce": 200,
+        "offsetLine": 0,
+        "offsetColumn": 0,
+        "sourceName": "languagetool",
+        "formatLines": 3,
+        "formatPattern": [
+          "^\\d+?\\.\\)\\s+Line\\s+(\\d+),\\s+column\\s+(\\d+),\\s+([^\\n]+)\nMessage:\\s+(.*)\n(Suggestion:\\s+.*)(\\r|\\n)*$",
+          {
+            "line": 1,
+            "column": 2,
+            "message": [ 4, 3, "\n",  5 ]
+          }
+        ],
+        "args": [
+          "-adl"
+        ]
+      }
+  },
+  "python.pythonPath": "/usr/bin/python3.8",
+  "python.linting.pylintArgs": ["--extension-pkg-whitelist=cv2", "--generated-members=cv2.*", 
+    "--disable=all" , "--enable=F,E,unreachable,duplicate-key,unnecessary-semicolon,global-variable-not-assigned,unused-variable,unused-argument,binary-op-exception,bad-format-string,anomalous-backslash-in-string,bad-open-mode"]
 }

@@ -16,9 +16,17 @@ if &compatible
 	set nocompatible               " Be iMproved
 endif
 
+
+set viewoptions=cursor,folds,slash,unix
+
+set expandtab
+set shiftwidth=2
+set softtabstop=2
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
 set updatetime=300
+set undodir=$HOME/.local/share/nvim/undodir//
+set undofile
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -34,7 +42,8 @@ let g:netrw_browsex_viewer = "xdg-open"
 call neobundle#begin(expand('~/.vim/bundle/'))  " Let NeoBundle manage NeoBundle
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'tpope/vim-projectionist'
+"NeoBundle 'tpope/vim-projectionist'
+NeoBundle 'zhimsel/vim-stay'
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
 " Note: You don't set neobundle setting in .gvimrc!
@@ -42,8 +51,13 @@ NeoBundle 'lifepillar/vim-solarized8'
 NeoBundle 'arcticicestudio/nord-vim'
 NeoBundle 'tibabit/vim-templates'
 NeoBundle 'preservim/nerdtree'
+NeoBundle 'tiagofumo/vim-nerdtree-syntax-highlight'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'shumphfrey/fugitive-gitlab.vim'
+let g:fugitive_gitlab_domains = ['http://git.damavan04.dmv']
+let g:gitlab_api_keys = {'git.damavan04.dmv': 'TEvHHm_yKPFNm7xxxDyC'} 
 let g:fugitive_dynamic_colors=0
+let g:fugitive_git_executable='git'
 "NeoBundle 'junegunn/gv.vim'
 NeoBundle 'rbong/vim-flog'
 let g:flog_default_arguments = { 'format': '%ai [%h] {%an}%d %s' }
@@ -57,7 +71,7 @@ NeoBundle 'vhdirk/vim-cmake'
 NeoBundle 'skywind3000/asyncrun.vim'
 NeoBundle 'tpope/vim-dispatch'
 "NeoBundle 'rdnetto/YCM-Generator'
-NeoBundle 'jceb/vim-orgmode'
+"NeoBundle 'jceb/vim-orgmode'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-repeat'
 """ Markdown Previewer
@@ -92,20 +106,30 @@ endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
+NeoBundle 'vimwiki/vimwiki'
+NeoBundle 'tbabej/taskwiki'
+let g:vimwiki_global_ext = 0
+let g:vimwiki_folding='custom'
+let g:taskwiki_dont_preserve_folds="yes" 
+
 """ IndentLine configuration
 NeoBundle 'Yggdroot/indentLine'
-"NeoBundle 'lukas-reineke/indent-blankline.nvim'
 let g:indentLine_char = ''
-let g:indentLine_fileTypeExclude = ['json', 'markdown']
-
+let g:indentLine_fileTypeExclude = [
+\  'json',
+\  'markdown',
+\  'yaml',
+\  'startify',
+\  'tagbar']
+let g:indentLine_concealcursor = 'nc'
 
 "let g:indentLine_setColors = 0
 
-"NeoBundle 'notmuch/notmuch/tree/master/vim'
 
 if !has('nvim')
 	NeoBundle 'jeaye/color_coded'
 else
+        let $VISUAL="nvr -cc split --remote-wait +'setlocal bufhidden=wipe'"
 	"NeoBundle 'arakashic/chromatica.nvim'
 	NeoBundle 'jackguo380/vim-lsp-cxx-highlight'
 	NeoBundle 'neoclide/coc.nvim', 'release', { 'build': { 'others': 'git checkout release' } }
@@ -203,6 +227,7 @@ let g:nord_italic_comments = 1
 set signcolumn=yes
 
 let g:nord_cursor_line_number_background = 1
+let g:vim_markdown_new_list_item_indent = 2
 colorscheme nord
 hi LineNr guibg=NONE
 hi Normal guibg=NONE
@@ -215,6 +240,9 @@ nnoremap <F4> :A<CR>
 nmap <C-LeftMouse> <Plug>(coc-definition) 
 nmap <leader>r <Plug>(coc-references)
 nmap <leader>g <Plug>(coc-definition)
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 nnoremap <leader>cs :noh<CR>
 nnoremap <leader>tn :tabnew
 nnoremap <leader>h <C-w>h
@@ -226,7 +254,12 @@ nnoremap <leader>cn :cn<CR>
 nnoremap <leader>cp :cp<CR>
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>rf <Plug>(coc-refactor)
+nmap <silent> <leader>tw <Plug>(coc-cursors-word)
+nmap <silent> <leader>tr  <Plug>(coc-cursors-operator)
 
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
 "Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -298,7 +331,7 @@ augroup end
 
 if has('nvim')
 	tnoremap ii <C-\><C-n>
-	au TermOpen * setlocal nonumber norelativenumber nocursorline signcolumn=no
+	au TermOpen * setlocal nonumber conceallevel=0 norelativenumber nocursorline signcolumn=no
 	au TermOpen * startinsert
 	let g:python3_host_prog = '/usr/bin/python3.8'
 	let g:chromatica#libclang_path = "/usr/lib/llvm-6.0/lib"

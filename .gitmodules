@@ -35,3 +35,6 @@
 [submodule "soft/lua-pam"]
 	path = soft/lua-pam
 	url = https://github.com/RMTT/lua-pam
+[submodule "soft/panrun"]
+	path = soft/panrun
+	url = https://github.com/mb21/panrun.git

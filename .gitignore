@@ -8,3 +8,5 @@ config/spicetify/Extensions
 config/spicetify/Extracted
 config/spicetify/Backup
 /vim/sessions/default.vim
+/vim/view
+vim/.netrwhist

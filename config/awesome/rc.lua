@@ -38,10 +38,10 @@ locker = "i3lock-fancy-dualmonitor -gp"
 --locker = "awesome-client \"_G.show_lockscreen()\""
 
 -- Autostart programs
+awful.spawn("xset s 600 600 dpms 610 610 610")
 run_once({ "nm-applet -sm-disable" })
---run_once({ "compton" })
-run_once({ "xautolock -time 10 -locker '" .. locker .. "'" })
-run_once({ "caffeine" })
+run_once({ "compton" })
+run_once({ "xss-lock -- " .. locker })
 -- run_once({ "/usr/local/mattermost-desktop-4.3.1-linux-x64/mattermost-desktop --hidden" })
 
 
@@ -74,6 +74,9 @@ end
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init("~/.config/awesome/themes/zenburn/theme.lua")
 
+require('module.volume-osd')
+require('module.brightness-osd')
+
 -- This is used later as the default terminal and editor to run.
 terminal = "termite"
 editor = os.getenv("EDITOR") or "nvim" 
@@ -87,7 +90,8 @@ editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
-awful.layout.layouts = {
+tag.connect_signal("request::default_layouts", function()
+  awful.layout.append_default_layouts({
     awful.layout.suit.floating,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
@@ -104,7 +108,8 @@ awful.layout.layouts = {
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
-}
+  })
+end)
 -- }}}
 
 -- {{{ Helper functions
@@ -208,9 +213,9 @@ local function set_wallpaper(s)
 end
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", set_wallpaper)
-
-awful.screen.connect_for_each_screen(function(s)
+screen.connect_signal("request::wallpaper", set_wallpaper)
+screen.connect_signal("request::desktop_decoration", 
+  function(s)
     -- Wallpaper
     set_wallpaper(s)
     -- Each screen has its own tag table.
@@ -233,9 +238,9 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
     -- Create the battery widget
-    s.myBattery = require("./widget/battery-widget"){
+    s.myBattery = require("./widget/battery-widget")({
 	    ac = "AC",
-	    adapter = "BAT0",
+	    --adapter = "BAT0",
 	    ac_prefix = "",
 	    battery_prefix = {
 		    { 20,  "" },
@@ -249,7 +254,7 @@ awful.screen.connect_for_each_screen(function(s)
 	    widget_text = '<span font="Ubuntu Nerd Font 14">${AC_BAT}</span> ',
 	    tooltip_text = "Battery ${state}: ${percent}%\n${time_text} remaining",
 	    widget_font = beautiful.font
-    }
+    })
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
@@ -340,7 +345,7 @@ globalkeys = gears.table.join(
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
-    awful.key({ modkey, }, "l", function() awful.spawn(locker) end,
+    awful.key({ modkey, }, "l", function() awful.spawn("loginctl lock-session") end,
               {description = "lock screen", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
@@ -361,6 +366,50 @@ globalkeys = gears.table.join(
               {description = "select next", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
+
+
+    -- light control
+    awful.key(
+            {},
+            'XF86MonBrightnessUp',
+            function()
+                    awesome.emit_signal('brightness::raise')
+            end,
+            {description = 'increase brightness up by 10%', group = 'hotkeys'}
+    ),
+    awful.key(
+            {},
+            'XF86MonBrightnessDown',
+            function()
+                    awesome.emit_signal('brightness::lower')
+            end,
+            {description = 'decrease brightness up by 10%', group = 'hotkeys'}
+    ),
+    -- ALSA volume control
+    awful.key(
+            {},
+            'XF86AudioRaiseVolume',
+            function()
+                    awesome.emit_signal('volume::raise')
+            end,
+            {description = 'increase volume up by 5%', group = 'hotkeys'}
+    ),
+    awful.key(
+            {},
+            'XF86AudioLowerVolume',
+            function()
+                    awesome.emit_signal('volume::lower')
+            end,
+            {description = 'decrease volume up by 5%', group = 'hotkeys'}
+    ),
+    awful.key(
+            {},
+            'XF86AudioMute',
+            function()
+                    awesome.emit_signal('volume::toggle_mute')
+            end,
+            {description = 'toggle mute', group = 'hotkeys'}
+    ),
 
     awful.key({ modkey, "Control" }, "n",
               function ()
@@ -440,54 +489,73 @@ clientkeys = gears.table.join(
         {description = "(un)maximize horizontally", group = "client"})
 )
 
--- Bind all key numbers to tags.
--- Be careful: we use keycodes to make it work on any keyboard layout.
--- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, 9 do
-    globalkeys = gears.table.join(globalkeys,
-        -- View tag only.
-        awful.key({ modkey }, "#" .. i + 9,
-                  function ()
-                        local screen = awful.screen.focused()
-                        local tag = screen.tags[i]
-                        if tag then
-                           tag:view_only()
-                        end
-                  end,
-                  {description = "view tag #"..i, group = "tag"}),
-        -- Toggle tag display.
-        awful.key({ modkey, "Control" }, "#" .. i + 9,
-                  function ()
-                      local screen = awful.screen.focused()
-                      local tag = screen.tags[i]
-                      if tag then
-                         awful.tag.viewtoggle(tag)
-                      end
-                  end,
-                  {description = "toggle tag #" .. i, group = "tag"}),
-        -- Move client to tag.
-        awful.key({ modkey, "Shift" }, "#" .. i + 9,
-                  function ()
-                      if client.focus then
-                          local tag = client.focus.screen.tags[i]
-                          if tag then
-                              client.focus:move_to_tag(tag)
-                          end
-                     end
-                  end,
-                  {description = "move focused client to tag #"..i, group = "tag"}),
-        -- Toggle tag on focused client.
-        awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
-                  function ()
-                      if client.focus then
-                          local tag = client.focus.screen.tags[i]
-                          if tag then
-                              client.focus:toggle_tag(tag)
-                          end
-                      end
-                  end,
-                  {description = "toggle focused client on tag #" .. i, group = "tag"})
-    )
+	-- Hack to only show tags 1 and 9 in the shortcut window (mod+s)
+	local descr_view, descr_toggle, descr_move, descr_toggle_focus
+	if i == 1 or i == 9 then
+		descr_view = {description = 'view tag #', group = 'tag'}
+		descr_toggle = {description = 'toggle tag #', group = 'tag'}
+		descr_move = {description = 'move focused client to tag #', group = 'tag'}
+		descr_toggle_focus = {description = 'toggle focused client on tag #', group = 'tag'}
+	end
+	globalkeys =
+		awful.util.table.join(
+		globalkeys,
+		-- View tag only.
+		awful.key(
+			{modkey},
+			'#' .. i + 9,
+			function()
+				local focused = awful.screen.focused()
+				local tag = focused.tags[i]
+				if tag then
+					tag:view_only()
+				end
+			end,
+			descr_view
+		),
+		-- Toggle tag display.
+		awful.key(
+			{modkey, 'Control'},
+			'#' .. i + 9,
+			function()
+				local focused = awful.screen.focused()
+				local tag = focused.tags[i]
+				if tag then
+					awful.tag.viewtoggle(tag)
+				end
+			end,
+			descr_toggle
+		),
+		-- Move client to tag.
+		awful.key(
+			{modkey, 'Shift'},
+			'#' .. i + 9,
+			function()
+				if client.focus then
+					local tag = client.focus.screen.tags[i]
+					if tag then
+						client.focus:move_to_tag(tag)
+					end
+				end
+			end,
+			descr_move
+		),
+		-- Toggle tag on focused client.
+		awful.key(
+			{modkey, 'Control', 'Shift'},
+			'#' .. i + 9,
+			function()
+				if client.focus then
+					local tag = client.focus.screen.tags[i]
+					if tag then
+						client.focus:toggle_tag(tag)
+					end
+				end
+			end,
+			descr_toggle_focus
+		)
+	)
 end
 
 clientbuttons = gears.table.join(

@@ -22,3 +22,4 @@ export BROWSER="/usr/bin/firefox"
 export EDITOR="nvim"
 export VISUAL="nvim"
 export QT_STYLE_OVERRIDE=gtk
+export XDG_CURRENT_DESKTOP=GNOME
