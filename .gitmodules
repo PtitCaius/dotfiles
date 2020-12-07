@@ -38,3 +38,6 @@
 [submodule "soft/panrun"]
 	path = soft/panrun
 	url = https://github.com/mb21/panrun.git
+[submodule "soft/rofi"]
+	path = soft/rofi
+	url = https://github.com/davatorium/rofi.git
