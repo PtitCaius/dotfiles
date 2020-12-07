@@ -23,7 +23,6 @@
     ~/.config/compton.conf: 'config/compton.conf'
     ~/.config/nvim: 'config/nvim'
     ~/.config/rofi: 'config/rofi'
-    ~/.config/oh-my-zsh: 'config/oh-my-zsh'
     ~/.config/p10k.zsh: 'config/p10h.zsh'
     ~/.config/spicetify: 'config/spicetify'
     ~/.themes:

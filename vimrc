@@ -229,10 +229,19 @@ set signcolumn=yes
 let g:nord_cursor_line_number_background = 1
 let g:vim_markdown_new_list_item_indent = 2
 colorscheme nord
-hi LineNr guibg=NONE
-hi Normal guibg=NONE
-hi SignColumn guibg=NONE
-hi CursorLineNr guibg=NONE
+" Custom Highlights -> I have to take nord color variable to ease up
+hi! LineNr guibg=NONE
+hi! Normal guibg=NONE
+hi! SignColumn guibg=NONE
+hi! CursorLineNr guibg=NONE
+hi! link cDefine Define
+hi! link cPreCondit Define
+hi! Define guifg=#5E81AC
+hi! Include guifg=#5E81AC
+hi! link Macro Function
+hi! Type guifg=#EBCB8B
+hi! link LspCxxHlSymNamespace LspCxxHlSymClass
+hi! link LspCxxHlSymField Normal
 
 nnoremap <F3> :NERDTreeToggle<CR>
 nnoremap <F2> :TagbarToggle<CR>

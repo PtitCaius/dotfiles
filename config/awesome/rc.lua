@@ -76,6 +76,7 @@ beautiful.init("~/.config/awesome/themes/zenburn/theme.lua")
 
 require('module.volume-osd')
 require('module.brightness-osd')
+local switcher = require('module.awesome-switcher')
 
 -- This is used later as the default terminal and editor to run.
 terminal = "termite"
@@ -94,17 +95,17 @@ tag.connect_signal("request::default_layouts", function()
   awful.layout.append_default_layouts({
     awful.layout.suit.floating,
     awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
+    -- awful.layout.suit.tile.left,
+    -- awful.layout.suit.tile.bottom,
+    -- awful.layout.suit.tile.top,
     awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
+    -- awful.layout.suit.fair.horizontal,
+    -- awful.layout.suit.spiral,
+    -- awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
+    -- awful.layout.suit.max.fullscreen,
+    -- awful.layout.suit.magnifier,
+    -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
@@ -331,13 +332,10 @@ globalkeys = gears.table.join(
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
-    awful.key({ modkey,           }, "Tab",
-        function ()
-            awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
-        end,
+    awful.key({ "Mod1",           }, "Tab",
+              function ()
+                  switcher.switch( 1, "Mod1", "Alt_L", "Shift", "Tab")
+              end, 
         {description = "go back", group = "client"}),
 
     -- Standard program
@@ -598,7 +596,8 @@ awful.rules.rules = {
           "Wpa_gui",
           "pinentry",
           "veromix",
-          "xtightvncviewer"},
+          "xtightvncviewer",
+          "Matplotlib"},
 
         name = {
           "Event Tester",  -- xev.
@@ -627,7 +626,7 @@ awful.rules.rules = {
 -- {{{ Signals
 --- Signal function for adding or not the title bar, depending on the floating/maximized state of the client 
 client.connect_signal("property::floating", function(c)
-    if c.floating or (c.first_tag ~= nil and c.first_tag.layout.name == "floating") then
+    if c.floating and not c.maximized or (c.first_tag ~= nil and c.first_tag.layout.name == "floating") then
         awful.titlebar.show(c)
 	c.border_width = beautiful.border_width
     else
@@ -637,7 +636,7 @@ client.connect_signal("property::floating", function(c)
 end)
 
 client.connect_signal("manage", function(c)
-    if c.floating or c.first_tag.layout.name == "floating" then
+    if c.floating and not c.maximized or c.first_tag.layout.name == "floating" then
         awful.titlebar.show(c)
 	c.border_width = beautiful.border_width
     else
@@ -648,7 +647,7 @@ end)
 
 client.connect_signal("request::activate", function(c)
     if context == client.movetoscreen then
-        if c.floating or c.first_tag.layout.name == "floating" then
+        if c.floating and not c.maximized or c.first_tag.layout.name == "floating" then
             awful.titlebar.show(c)
 	    c.border_width = beautiful.border_width
         else
@@ -662,7 +661,7 @@ end)
 tag.connect_signal("property::layout", function(t)
     local clients = t:clients()
     for k,c in pairs(clients) do
-        if c.floating or c.first_tag.layout.name == "floating" then
+        if c.floating and not c.maximized or c.first_tag.layout.name == "floating" then
             awful.titlebar.show(c)
 	    c.border_width = beautiful.border_width
         else

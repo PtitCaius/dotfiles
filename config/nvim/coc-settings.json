@@ -8,7 +8,7 @@
     "--fallback-style=none"
   ],
   "suggest.timeout": 5000,
-  "suggest.maxCompleteItemCount": 20,
+  "suggest.maxCompleteItemCount": 70,
   "suggest.localityBonus": false,
   "suggest.enablePreselect": true,
   "suggest.noselect": false,
@@ -94,7 +94,11 @@
         ]
       }
   },
-  "python.pythonPath": "/usr/bin/python3.8",
+  "python.jediEnabled": false,
   "python.linting.pylintArgs": ["--extension-pkg-whitelist=cv2", "--generated-members=cv2.*", 
-    "--disable=all" , "--enable=F,E,unreachable,duplicate-key,unnecessary-semicolon,global-variable-not-assigned,unused-variable,unused-argument,binary-op-exception,bad-format-string,anomalous-backslash-in-string,bad-open-mode"]
+    "--disable=all",
+    "--enable=F,E,unreachable,duplicate-key,unnecessary-semicolon,global-variable-not-assigned,unused-variable,unused-argument,binary-op-exception,bad-format-string,anomalous-backslash-in-string,bad-open-mode",
+    "--init-hook='import pylint_venv; pylint_venv.inithook(force_venv_activation=True)'"
+  ],
+  "python.formatting.autopep8Args": ["-a"]
 }
