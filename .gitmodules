@@ -41,3 +41,6 @@
 [submodule "soft/rofi"]
 	path = soft/rofi
 	url = https://github.com/davatorium/rofi.git
+[submodule "soft/neovim"]
+        path = soft/neovim
+        url = https://github.com/neovim/neovim
