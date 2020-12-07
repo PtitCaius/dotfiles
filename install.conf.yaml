@@ -36,4 +36,5 @@
 
 - shell:
     - MYPWD=`pwd` && cd config/gedit/nord-gedit/ && ./install.sh && cd $MYPWD
+    - MYPWD=`pwd` && cd icons/Zafiro-icons && git apply ../darkZafiro.patch && cd $MYPWD
     - chmod +x ~/.local/bin/poll-xrandr
