@@ -10,3 +10,4 @@ config/spicetify/Backup
 /vim/sessions/default.vim
 /vim/view
 vim/.netrwhist
+config/ranger/__pycache__/
