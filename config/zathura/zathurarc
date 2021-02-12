@@ -1,0 +1,31 @@
+set selection-clipboard clipboard
+set font "Ubuntu 10"
+set recolor
+set smooth-scroll "true"
+set page-padding 3
+
+set statusbar-bg "#2e3440" 
+set completion-bg "#2e3440" 
+set inputbar-bg "#2e3440" 
+set statusbar-fg "#d8dee9" 
+set recolor-lightcolor "#2e3440"
+set recolor-darkcolor "#d8dee9" 
+set inputbar-fg "#d8dee9"
+set default-bg "#2e3440"
+set default-fg "#d8dee9" 
+set notification-error-bg "#bf616a"
+set notification-error-fg "#2e3440"
+set notification-warning-bg #ebcb8b"
+set notification-warning-fg #2e3440"
+set completion-highlight-bg "#a3be8c" 
+set completion-highlight-fg "#2e3440" 
+set completion-group-bg "#434c5e"
+set completion-group-fg "#d8dee9"
+set completion-fg "#d8dee9" 
+set notification-bg "#2e3440"
+set notification-fg "#d8dee9"
+set highlight-color "#88c0d0"
+set highlight-active-color "#a3be8c"
+set window-title-basename true
+set window-title-page true
+set incremental-search true
