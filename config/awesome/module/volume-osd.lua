@@ -4,17 +4,22 @@ local wibox = require('wibox')
 local math = require('math')
 local beautiful = require('beautiful')
 local dpi = beautiful.xresources.apply_dpi
-local icons = require('themes.icons')
+local icon_theme = require('lib.utils.icon_theme')
 
+local icons = icon_theme.volume_icons
 -- configuration (à mettre dans le module config)
 local osd_height = dpi(100)
 local osd_width = dpi(300)
 local osd_margin = dpi(10)
 local volume_delta = 5
+local volume_threshold = {
+  low = 33,
+  medium = 66
+}
 
 local osd_header = wibox.widget {
 	text = 'Volume',
-	font = 'Inter Bold 12',
+	font = 'Ubuntu Bold 12',
 	align = 'left',
 	valign = 'center',
 	widget = wibox.widget.textbox
@@ -22,7 +27,7 @@ local osd_header = wibox.widget {
 
 local osd_value = wibox.widget {
 	text = '0%',
-	font = 'Inter Bold 12',
+	font = 'Ubuntu Bold 12',
 	align = 'center',
 	valign = 'center',
 	widget = wibox.widget.textbox
@@ -51,7 +56,7 @@ local slider_osd = wibox.widget {
 
 local icon = wibox.widget {
 	{
-		image = icons.volume,
+		image = icons.muted,
 		resize = true,
 		widget = wibox.widget.imagebox
 	},
@@ -59,6 +64,10 @@ local icon = wibox.widget {
 	bottom = dpi(12),
 	widget = wibox.container.margin
 }
+
+icon:buttons({
+  awful.button({  }, 1, function(c) awesome.emit_signal("volume::toggle_mute") end
+    )})
 
 local volume_slider_osd = wibox.widget {
 	icon,
@@ -73,12 +82,29 @@ vol_osd_slider.onClick = false
 
 
 local update_osd = function(volume_level, mute)
+  local img = nil
+  if mute == "on" and volume_level > 0 then
+    if(volume_level < volume_threshold.low) then
+      img = icons.low
+    elseif volume_level < volume_threshold.medium then
+      img = icons.medium
+    else
+      img = icons.high
+    end
+  else
+    img = icons.muted
+  end
+
+  awesome.emit_signal('volume::updated', volume_level, img)
+
   -- Update textbox widget text
   osd_value.text = volume_level .. '%'
   -- prevent setting the slider if the sliders called set_volume
   if not vol_osd_slider.onClick then
     vol_osd_slider:set_value(volume_level)
   end
+
+  icon.widget.image = img
 
   -- reset timer if needed
     awesome.emit_signal( 'module::volume_osd:rerun', true)
@@ -90,8 +116,8 @@ local spawn_amixer_command = function(command)
     function(stdout)
       if awful.screen.focused().show_vol_osd then
         local volume = string.match(stdout, '(%d?%d?%d)%%')
-        local mute = string.match(stdout, '(On|Off)')
-        update_osd(tonumber(volume, mute))
+        local mute = string.match(stdout, '%[(on)%]') or "off" 
+        update_osd(tonumber(volume), mute)
       end
     end
   )
@@ -181,6 +207,25 @@ local hide_osd = gears.timer {
 	end
 }
 
+local update_volume = gears.timer {
+  timeout = 2,
+  autostart = true,
+  callback = function()
+    spawn_amixer_command("amixer -D pulse sget Master")
+  end
+}
+
+local function has_value (tab, val)
+    for index, value in ipairs(tab) do
+        if value == val then
+            return true
+        end
+    end
+
+    return false
+end
+
+
 screen.connect_signal(
 	"request::desktop_decoration",
 	function(s)
@@ -227,6 +272,14 @@ screen.connect_signal(
                   right = dpi(24),
                   widget = wibox.container.margin
 		}
+
+                s.volume_osd_overlay:buttons {
+                  awful.button({  }, 1, function(c)
+                    if not (has_value(mouse.current_widgets, volume_slider_osd) or has_value(mouse.current_widgets, icon)) then
+                      s.volume_osd_overlay.visible = false
+                    end
+                  end)
+                }
 
 		-- Reset timer on mouse hover
 		s.volume_osd_overlay:connect_signal(
