@@ -4,7 +4,12 @@ local wibox = require('wibox')
 local math = require('math')
 local beautiful = require('beautiful')
 local dpi = beautiful.xresources.apply_dpi
-local icons = require('themes.icons')
+local icon_theme = require('lib.utils.icon_theme')
+local icons = icon_theme.brightness_icons
+local brightness_threshold = {
+  low = 33,
+  medium = 66
+}
 
 -- configuration (à mettre dans le module config)
 local osd_height = dpi(100)
@@ -51,7 +56,7 @@ local slider_osd = wibox.widget {
 
 local icon = wibox.widget {
 	{
-		image = icons.volume,
+		image = icons.high,
 		resize = true,
 		widget = wibox.widget.imagebox
 	},
@@ -78,6 +83,14 @@ local update_osd = function(brightness_level)
   -- prevent setting the slider if the sliders called set_volume
   if not bri_osd_slider.onClick then
     bri_osd_slider:set_value(brightness_level)
+  end
+
+  if(brightness_level < brightness_threshold.low) then
+    icon.widget.image = icons.low
+  elseif brightness_level < brightness_threshold.medium then
+    icon.widget.image = icons.medium
+  else
+    icon.widget.image = icons.high
   end
 
   -- reset timer if needed
