@@ -44,3 +44,9 @@
 [submodule "soft/neovim"]
         path = soft/neovim
         url = https://github.com/neovim/neovim
+[submodule "soft/picom"]
+	path = soft/picom
+	url = https://github.com/yshui/picom.git
+[submodule "soft/nord_pygments"]
+	path = soft/nord_pygments
+	url = https://github.com/sbrisard/nord_pygments.git

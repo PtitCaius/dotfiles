@@ -33,14 +33,14 @@ local slider_osd = wibox.widget {
 	{
 		id = 'vol_osd_slider',
 		bar_shape = gears.shape.rounded_rect,
-		bar_height = dpi(2),
-		bar_color = '#ffffff20',
-		bar_active_color = '#f2f2f2EE',
-		handle_color = '#ffffff',
+		bar_height = dpi(6),
+		bar_color = beautiful.border_normal,
+		bar_active_color = beautiful.border_focus,
+		handle_color = beautiful.fg_normal,
 		handle_shape = gears.shape.circle,
 		handle_width = dpi(15),
 		handle_border_color = '#00000012',
-		handle_border_width = dpi(1),
+		handle_border_width = 0,
 		maximum = 100,
 		widget = wibox.widget.slider
 	},
@@ -202,7 +202,9 @@ screen.connect_signal(
 			maximum_height = osd_height,
 			maximum_width = osd_width,
 			offset = dpi(5),
-			shape = gears.shape.rectangle,
+			shape = function(cr,w, h)
+                          gears.shape.rounded_rect(cr,w,h,dpi(5))
+                        end,
 			bg = beautiful.transparent,
 			preferred_anchors = 'middle',
 			preferred_positions = {'left', 'right', 'top', 'bottom'}
