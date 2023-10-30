@@ -29,9 +29,6 @@
 [submodule "config/awesome/widget/battery-widget"]
 	path = config/awesome/widget/battery-widget
 	url = https://github.com/deficient/battery-widget
-[submodule "soft/awesome"]
-	path = soft/awesome
-	url = https://github.com/awesomeWM/awesome.git
 [submodule "soft/lua-pam"]
 	path = soft/lua-pam
 	url = https://github.com/RMTT/lua-pam
