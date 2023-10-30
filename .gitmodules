@@ -56,3 +56,6 @@
 [submodule "soft/LinVst"]
 	path = soft/LinVst
 	url = https://github.com/osxmidi/LinVst.git
+[submodule "soft/cheat"]
+	path = soft/cheat
+	url = https://github.com/cheat/cheat.git
