@@ -1,6 +1,5 @@
 set selection-clipboard clipboard
 set font "Ubuntu 10"
-set recolor
 set smooth-scroll "true"
 set page-padding 3
 

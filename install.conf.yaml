@@ -8,6 +8,12 @@
     - ~/.local/share/fonts/
     - ~/.local/bin/
 
+- template:
+    - ~/.indentconfig.yaml: 
+        source_file: indentconfig.yaml
+        params: 
+            HOME_DIR: /home/lopezmar
+
 - link:
     ~/.dotfiles: ''
     ~/.vim:
@@ -17,6 +23,7 @@
     ~/.bashrc:
     ~/.zshrc:
     ~/.gtkrc-2.0:
+    ~/.config/autostart: 'config/autostart'
     ~/.config/ranger: 'config/ranger'
     ~/.config/termite: 'config/termite'
     ~/.config/awesome: 'config/awesome'
@@ -33,8 +40,12 @@
     ~/.local/share/applications/mimeapps.list: 'local/share/applications/mimeapps.list'
     ~/.dir_colors:
     ~/.local/bin/spicetify: 'soft/spicetify/spicetify'
+    ~/.config/rclone: 'config/rclone'
 
 - shell:
     - MYPWD=`pwd` && cd config/gedit/nord-gedit/ && ./install.sh && cd $MYPWD
     - MYPWD=`pwd` && cd icons/Zafiro-icons && git apply ../darkZafiro.patch && cd $MYPWD
     - chmod +x ~/.local/bin/poll-xrandr
+
+
+# vim:set et sts=4 sw=4 ts=8:

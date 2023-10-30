@@ -20,6 +20,7 @@ test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
 ZSH_COMPDUMP="${HOME}/.local/share/zsh"
+ZSH_COLORIZE_STYLE="nord"
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
@@ -78,7 +79,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting colorize docker sudo pip history-substring-search zsh-completions)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting colorize docker sudo pip history-substring-search zsh-completions nvm)
 
 source $ZSH/oh-my-zsh.sh
 autoload -U compinit && compinit
@@ -108,6 +109,16 @@ autoload -U compinit && compinit
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias activate=". .venv/bin/activate"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.config/p10k.zsh ]] || source ~/.config/p10k.zsh
+
+export NODE_PATH="$HOME/.cache/node_modules"
+
+
+PATH="/home/lopezmar/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/lopezmar/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/lopezmar/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/lopezmar/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/lopezmar/perl5"; export PERL_MM_OPT;

@@ -1,3 +1,0 @@
-! Enabled modi
-rofi.modi:                           drun,window,run
-rofi.theme = /home/lopezmar/.config/material.rasi

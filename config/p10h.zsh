@@ -19,6 +19,12 @@
 [[ ! -o 'no_brace_expand' ]] || p10k_config_opts+=('no_brace_expand')
 'builtin' 'setopt' 'no_aliases' 'no_sh_glob' 'brace_expand'
 
+function prompt_root_env() {
+  if [[ $ROOTSYS != "" ]]; then
+    p10k segment  -t " ROOT" -b blue
+  fi
+}
+
 () {
   emulate -L zsh -o extended_glob
 
@@ -47,6 +53,7 @@
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
     status                  # exit code of the last command
+    root_env
     command_execution_time  # duration of the last command
     background_jobs         # presence of background jobs
     direnv                  # direnv status (https://direnv.net/)

@@ -1,19 +1,20 @@
 {
-  "clangd.path": "/home/lopezmar/.config/coc/extensions/coc-clangd-data/install/10.0.0/clangd_10.0.0/bin/clangd",
+  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.6/clangd_15.0.6/bin/clangd",
   "clangd.arguments": [
-    "-cross-file-rename",
-    "-clang-tidy",
     "-j=4",
-    "--limit-results=20",
-    "--fallback-style=none"
+    "--enable-config",
+    "--all-scopes-completion=true",
+    "--limit-results=70"
   ],
+  "clangd.fallbackFlags": ["-W","-Wall"],
+  "clangd.checkUpdates": true,
   "suggest.timeout": 5000,
+  "diagnostic.level": "information",
   "suggest.maxCompleteItemCount": 70,
   "suggest.localityBonus": false,
   "suggest.enablePreselect": true,
+  "codeLens.enable": true,
   "suggest.noselect": false,
-  "clangd.semanticHighlighting": true,
-  "suggest.detailMaxLength": 100,
   "suggest.labelMaxLength": 100,
   "suggest.detailField": "abbr",
   "suggest.minTriggerInputLength": 3,
@@ -22,10 +23,10 @@
     "http://json.schemastore.org/gitlab-ci": "**/.gitlab-ci.yml"
   },
   "yaml.completion": true,
-  "coc-actions.hideCursor": false,
   "yaml.validate": true,
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": "",
+  "diagnostic.infoSign": "",
   "diagnostic.virtualText": true,
   "diagnostic.virtualTextPrefix": "     ",
   "git.gitlab.hosts": [
@@ -33,10 +34,17 @@
   ],
   "git.removedSign.text": "-",
   "git.topRemovedSign.text": "-",
+  "git.removedSign.hlGroup": "GitGutterDelete",
+  "git.addedSign.hlGroup": "GitGutterAdd",
+  "git.changedSign.hlGroup": "GitGutterChange",
+  "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete",
   "git.addGBlameToVirtualText": false,
+  "html.autoClosingTags": true,
   "git.showCommitInFloating": true,
   "suggest.snippetIndicator": "",
+  "semanticTokens.filetypes": ["*"],
   "suggest.completionItemKindLabels": {
+
     "keyword": "",
     "variable": "",
     "value": "",
@@ -69,13 +77,37 @@
   "coc.source.issues.enable": false,
   "git.semanticCommit.filetypes": [],
   "coc.preferences.extensionUpdateCheck": "daily",
+  "texlab.chktex.onOpenAndSave": true,
+  "texlab.auxDirectory": "build/",
   "diagnostic-languageserver.filetypes": {
-    "markdown": "languagetool"
+    "cpp": "cppcheck",
+    "pandoc": "languagetool",
+    "tex":"textidote"
   },
   "diagnostic-languageserver.enable": false,
   "diagnostic-languageserver.linters": {
+    "textidote": {
+      "command": "textidote",
+      "debounce": 500,
+      "args": ["--type", "tex", "--check", "fr", "--output", "singleline", "--no-color"],
+      "offsetLine": 0,
+      "offsetColumn": 0,
+      "sourceName": "textidote",
+
+      "formatLines": 1,
+      "formatPattern": [
+	"\\(L(\\d+)C(\\d+)-L(\\d+)C(\\d+)\\):(.+)\".+\"$",
+	{
+	  "line": 1,
+	  "column": 2,
+	  "endLine": 3,
+	  "endColumn": 4,
+	  "message": 5
+	}
+      ]
+    },
     "languagetool" : {
-        "command": "languagetool",
+        "command": "/home/lopezmar/dotfiles/soft/LanguageTool-5.5-stable/languagetool.sh",
         "debounce": 200,
         "offsetLine": 0,
         "offsetColumn": 0,
@@ -85,20 +117,52 @@
           "^\\d+?\\.\\)\\s+Line\\s+(\\d+),\\s+column\\s+(\\d+),\\s+([^\\n]+)\nMessage:\\s+(.*)\n(Suggestion:\\s+.*)(\\r|\\n)*$",
           {
             "line": 1,
+            "sourceName": "%file",
             "column": 2,
             "message": [ 4, 3, "\n",  5 ]
           }
         ],
         "args": [
-          "-adl"
+          "-adl",
+          "%file"
         ]
+      },
+      "cppcheck": {
+        "command": "cppcheck",
+        "args": [
+          "--enable=performance,warning,portability",
+          "--std=c++11",
+          "--language=c++",
+          "--suppress=missingIncludeSystem",
+          "%file"
+        ],
+        "sourceName": "cppcheck",
+        "debounce": 99,
+        "isStderr": true,
+        "isStdout": false,
+        "offsetLine": 0,
+        "offsetColumn": 0,
+        "formatPattern": [
+          "^[^ ]+:(\\d*):(\\d+):\\s+([^:]+):\\s+(.+)$",
+          {
+            "line": 1,
+            "endLine": 1,
+            "column": 2,
+            "endColumn": 2,
+            "sourceName": "%file",
+            "message": 4,
+            "security": 3
+          }
+        ],
+        "securities": {
+          "error": "error",
+          "warning": "warning",
+          "note": "hint"
+        }
       }
   },
-  "python.jediEnabled": false,
-  "python.linting.pylintArgs": ["--extension-pkg-whitelist=cv2", "--generated-members=cv2.*", 
-    "--disable=all",
-    "--enable=F,E,unreachable,duplicate-key,unnecessary-semicolon,global-variable-not-assigned,unused-variable,unused-argument,binary-op-exception,bad-format-string,anomalous-backslash-in-string,bad-open-mode",
-    "--init-hook='import pylint_venv; pylint_venv.inithook(force_venv_activation=True)'"
-  ],
-  "python.formatting.autopep8Args": ["-a"]
+  "python.analysis.stubPath": ".typestub",
+  "python.analysis.diagnosticSeverityOverrides": {
+   "reportMissingTypeStubs": "warning"  
+  }
 }
