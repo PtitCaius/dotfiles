@@ -11,3 +11,5 @@ config/spicetify/Backup
 /vim/view
 vim/.netrwhist
 __pycache__
+*.cache
+icons/hicolor/
